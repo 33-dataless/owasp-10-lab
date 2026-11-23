@@ -1,5 +1,11 @@
-from web.app import app
+from fastapi import APIRouter
 
-@app.get("/api/hello")
-async def hello():
-    return {"message": "Hello World!"}
+
+class HelloApi:
+    def __init__(self):
+        self.router = APIRouter(prefix="/api")
+
+        self.router.add_api_route("/hello", self.hello, methods=["GET"])
+
+    async def hello(self):
+        return {"message": "Hello World!"}

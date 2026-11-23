@@ -1,14 +1,19 @@
-from main import app
-from fastapi import FastAPI, Request, Form
+from fastapi import APIRouter, Request, Form
 from fastapi.responses import HTMLResponse
 
-@app.get("/", response_class=HTMLResponse)
-async def home(request: Request):
-    return templates.TemplateResponse(
-        "index.html",
-        {"request": request, "title": "Главная"}
-    )
 
-@app.post("/send")
-async def send(name: str = Form(...)):
-    return {"message": f"Привет, {name}!"}
+class PageHandler:
+    def __init__(self, templates):
+        self.templates = templates
+        self.router = APIRouter()
+
+        self.router.add_api_route("/", self.home, methods=["GET"], response_class=HTMLResponse)
+        self.router.add_api_route("/send", self.send, methods=["POST"])
+
+    async def home(self, request: Request):
+        return self.templates.TemplateResponse(
+            request, "index.html", {"title": "Главная"}
+        )
+
+    async def send(self, name: str = Form(...)):
+        return {"message": f"Привет, {name}!"}
