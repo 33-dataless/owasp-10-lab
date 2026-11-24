@@ -12,8 +12,8 @@ class PageHandler:
 
     async def home(self, request: Request):
         return self.templates.TemplateResponse(
-            request, "index.html", {"title": "Главная"}
+            request, "index.html", {"title": "Home"}
         )
 
     async def send(self, name: str = Form(...)):
-        return {"message": f"Привет, {name}!"}
+        return {"message": f"Hello, {name}!"}
