@@ -15,6 +15,7 @@ class App:
     def create(self) -> FastAPI:
         app = FastAPI()
         app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
+        app.mount("/js", StaticFiles(directory=BASE_DIR / "js"), name="js")
 
         for handler in self.handlers:
             app.include_router(handler.router)
