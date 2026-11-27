@@ -42,8 +42,6 @@ class Users(Base):
     )
     is_active: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
     failed_attempts: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
-    locked_until: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True))
-    email_verified: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), nullable=False
     )
@@ -65,19 +63,19 @@ class Users(Base):
     request_logs: Mapped[list["RequestLogs"]] = relationship(back_populates="user")
 
 
-class UserPreferences(Base):
-    __tablename__ = "user_preferences"
+# class UserPreferences(Base):
+#     __tablename__ = "user_preferences"
 
-    user_id: Mapped[UUID] = mapped_column(
-        PG_UUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), primary_key=True
-    )
-    theme: Mapped[str] = mapped_column(String(20), nullable=False, default="dark")
-    panel_state: Mapped[Optional[dict]] = mapped_column(JSONB)
-    updated_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False
-    )
+#     user_id: Mapped[UUID] = mapped_column(
+#         PG_UUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), primary_key=True
+#     )
+#     theme: Mapped[str] = mapped_column(String(20), nullable=False, default="dark")
+#     panel_state: Mapped[Optional[dict]] = mapped_column(JSONB)
+#     updated_at: Mapped[datetime] = mapped_column(
+#         DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False
+#     )
 
-    user: Mapped["Users"] = relationship(back_populates="preferences")
+#     user: Mapped["Users"] = relationship(back_populates="preferences")
 
 
 class Sessions(Base):
@@ -128,21 +126,21 @@ class AuthEvent(Base):
     )
 
 
-class PasswordResetTokens(Base):
-    __tablename__ = "password_reset_tokens"
+# class PasswordResetTokens(Base):
+#     __tablename__ = "password_reset_tokens"
 
-    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True, default=uuid4)
-    user_id: Mapped[UUID] = mapped_column(
-        PG_UUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), nullable=False
-    )
-    token_hash: Mapped[str] = mapped_column(String(255), nullable=False)
-    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
-    used: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now(), nullable=False
-    )
+#     id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True, default=uuid4)
+#     user_id: Mapped[UUID] = mapped_column(
+#         PG_UUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), nullable=False
+#     )
+#     token_hash: Mapped[str] = mapped_column(String(255), nullable=False)
+#     expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+#     used: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
+#     created_at: Mapped[datetime] = mapped_column(
+#         DateTime(timezone=True), server_default=func.now(), nullable=False
+#     )
 
-    user: Mapped["Users"] = relationship(back_populates="password_reset_tokens")
+#     user: Mapped["Users"] = relationship(back_populates="password_reset_tokens")
 
 
 class RequestLogs(Base):

@@ -1,11 +1,15 @@
+alembic==1.14.0
 annotated-doc==0.0.7
 annotated-types==0.8.0
 anyio==4.16.0
+asyncpg==0.30.0
 click==8.5.1
 fastapi==0.165.0
+greenlet==3.5.6
 h11==0.16.0
 idna==3.20
 Jinja2==3.1.6
+Mako==1.4.3
 MarkupSafe==3.0.4
 opentelemetry-api==1.45.2
 pydantic==2.14.4
@@ -13,9 +17,7 @@ pydantic-settings==2.16.3
 pydantic_core==2.50.5
 python-dotenv==1.2.4
 python-multipart==0.0.34
-sqlalchemy[asyncio]==2.0.36
-asyncpg==0.30.0
-alembic==1.14.0
+SQLAlchemy==2.0.36
 starlette==1.10.0
 typing-inspection==0.4.5
 typing_extensions==4.16.0
